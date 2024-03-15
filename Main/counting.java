@@ -17,6 +17,10 @@ public class counting {
 	public static double getCounter() {
 		return counter;
 	}
+	public static void removeCounter(double clicks) {
+		counter -= clicks;
+	}
+	
 	public static void addCounter(double clicks) {
 		counter += clicks;
 	}

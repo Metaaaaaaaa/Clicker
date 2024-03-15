@@ -7,7 +7,7 @@ import javax.swing.JFrame;
 public class WorldSelection {
 
 	JFrame frame;
-
+	Stats stats = new Stats();
 	
 	/**/
 	
@@ -18,7 +18,7 @@ public class WorldSelection {
 	
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 300);
+		frame.setBounds(stats.sWU  - (stats.sWU / 4), 0, stats.sW / 4  , 500);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 }

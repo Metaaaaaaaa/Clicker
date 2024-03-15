@@ -19,8 +19,9 @@ public class Stats {
 	
 	counting counting = new counting();
 	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-	int sW = screenSize.width;
+	int sW = screenSize.width + (screenSize.width / 25);
     int sH = screenSize.height;
+    int sWU = screenSize.width; //U steht für unverändert , brauch ich weil ich sonst nicht die Tabs richtig positionieren kann
     
    
 	
@@ -30,7 +31,7 @@ public class Stats {
 
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, sW / 4, 300);
+		frame.setBounds(sWU / 4 , sH / 2, sW / 4  , sH / 2);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		

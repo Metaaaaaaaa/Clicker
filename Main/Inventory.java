@@ -17,7 +17,7 @@ public class Inventory {
 	
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(stats.sW / 2, 0, stats.sW / 4 , stats.sH - 40);
+		frame.setBounds(stats.sWU / 2 , 0, stats.sW / 4 , stats.sH - 40);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
