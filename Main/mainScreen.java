@@ -1,6 +1,7 @@
 package Main;
 
 import java.awt.EventQueue;
+import java.util.HashMap;
 
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
@@ -17,10 +18,19 @@ import java.awt.GridLayout;
 import javax.swing.JLabel;
 import java.awt.event.AdjustmentListener;
 import java.awt.event.AdjustmentEvent;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 
 public class mainScreen {
 
 	private JFrame frame;
+	
+    Shop shopWindow = new Shop();
+    WorldSelection worldSelection = new WorldSelection();
+    Stats stats = new Stats();
+    Inventory inventory = new Inventory();
+    counting counting = new counting();
+    Tabs tabs = new Tabs();
 
 	
     public static void main(String[] args) {
@@ -43,26 +53,28 @@ public class mainScreen {
 
    
     private void initialize() {
+    	
+    	
         frame = new JFrame();
-        frame.setBounds(100, 100, 1107, 550);
+        frame.setBounds(stats.sW / 4 -  (stats.sW / 75), 0, stats.sW / 4 , stats.sH / 2 - 40);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().setLayout(null);
 
+        shopWindow.frame.setVisible(true);
+        stats.frame.setVisible(true);
+        inventory.frame.setVisible(true);
+        tabs.frame.setVisible(true);
         
-        JButton btnOpenShop = new JButton("Open Shop");
-        btnOpenShop.setBounds(10, 10, 150, 30);
-        btnOpenShop.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                openShopWindow();
-            }
+        JButton btnNewButton = new JButton("New button");
+        btnNewButton.addMouseListener(new MouseAdapter() {
+        	@Override
+        	public void mouseClicked(MouseEvent e) {
+        		counting.addCounter(counting.getCD());
+        		
+        	}
         });
-        frame.getContentPane().add(btnOpenShop);
+        btnNewButton.setBounds(136, 174, 89, 23);
+        frame.getContentPane().add(btnNewButton);
+    }
     }
 
-    
-    private void openShopWindow() {
-        Shop shopWindow = new Shop();
-        shopWindow.frame.setVisible(true);
-    }
-}
