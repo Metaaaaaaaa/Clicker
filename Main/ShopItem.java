@@ -1,69 +1,84 @@
 package Main;
 
 public class ShopItem {
-	private static double cost;
-	private static double DPSvalue;
-	private static double buyBuffs;
-	private static double buyThreshole;
-	private static String type;
-	private static double CDvalue;
+	private  double cost;
+	private  double DPSvalue;
+	private  double buyBuffs;
+	private  double buyThreshole;
+	private  String type;
+	private  double CDvalue;
 	
 	public ShopItem(double cost, double DPSvalue, double CDvalue, double buyThreshole){
-		ShopItem.cost = cost;
-		ShopItem.DPSvalue = DPSvalue;
-		ShopItem.CDvalue = CDvalue;
-		ShopItem.buyThreshole = buyThreshole;
+		this.cost = cost;
+		this.DPSvalue = DPSvalue;
+		this.CDvalue = CDvalue;
+		this.buyThreshole = buyThreshole;
 	}
 
-	public static double getCost() {
+	public  double getCost() {
 		return cost;
 	}
 
-	public static void setCost(double cost) {
-		ShopItem.cost = cost;
+	public  void setCost(double cost) {
+		this.cost = cost;
 	}
 
-	public static double getDPSvalue() {
-		return DPSvalue;
-	}
+	
 
-	public static void setDPSvalue(double dPSvalue) {
-		DPSvalue = dPSvalue;
-	}
-
-	public static double getBuyBuffs() {
+	public  double getBuyBuffs() {
 		return buyBuffs;
 	}
 
-	public static void setBuyBuffs(double buyBuffs) {
-		ShopItem.buyBuffs = buyBuffs;
+	public  void setBuyBuffs(double buyBuffs) {
+		this.buyBuffs = buyBuffs;
 	}
 
-	public static double getBuyThreshole() {
+	public  double getBuyThreshole() {
 		return buyThreshole;
 	}
 
-	public static void setBuyThreshole(double buyThreshole) {
-		ShopItem.buyThreshole = buyThreshole;
+	public  void setBuyThreshole(double buyThreshole) {
+		this.buyThreshole = buyThreshole;
 	}
 
-	public static String getType() {
+	public  String getType() {
 		return type;
 	}
 
-	public static void setType(String type) {
-		ShopItem.type = type;
+	public  void setType(String type) {
+		this.type = type;
+	}
+	
+	public  double getDPSvalue() {
+		return DPSvalue;
 	}
 
-	public static double getCDvalue() {
+	public  void setDPSvalue() {
+	
+	}
+
+	public  double getCDvalue() {
 		return CDvalue;
 	}
 
-	public static void setCDvalue(double cDvalue) {
-		CDvalue = cDvalue;
+	public  void setCDvalue() {
+		
 	}
 	
+	public void buyProgress(boolean maxBuy) {
+		
+		if (maxBuy) {
+			double stacks = counting.getCounter() / this.getCost();
+			counting.addDPS(stacks * this.getDPSvalue());
+			counting.removeCounter(counting.getCounter());
+			
+		} else {
+		if (counting.getCounter() >= this.getCost()) {
+			counting.addDPS(this.getDPSvalue());
+			counting.removeCounter(this.getCost());
+		}}
+	}}
 	
 
 		
-}
+

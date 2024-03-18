@@ -11,6 +11,8 @@ import java.awt.Dimension;
 import javax.swing.Timer;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.JPanel;
+import com.jgoodies.forms.factories.DefaultComponentFactory;
 
 
 public class Stats {
@@ -21,7 +23,9 @@ public class Stats {
 	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	int sW = screenSize.width + (screenSize.width / 25);
     int sH = screenSize.height;
-    int sWU = screenSize.width; //U steht für unverändert , brauch ich weil ich sonst nicht die Tabs richtig positionieren kann
+    int sWU = screenSize.width; 
+    
+    
     
    
 	
@@ -36,18 +40,41 @@ public class Stats {
 		frame.getContentPane().setLayout(null);
 		
 		JLabel counterLabel = new JLabel("0");
-		counterLabel.setBounds(10, 69, 115, 14);
+		counterLabel.setBounds(83, 31, 386, 24);
 		frame.getContentPane().add(counterLabel);
+		
+		JLabel Goldtxt = DefaultComponentFactory.getInstance().createLabel("Gold");
+		Goldtxt.setBounds(10, 31, 67, 24);
+		frame.getContentPane().add(Goldtxt);
+		
+		JLabel CDtxt = new JLabel("CD:");
+		CDtxt.setBounds(10, 66, 46, 14);
+		frame.getContentPane().add(CDtxt);
+		
+		JLabel CDLabel = new JLabel("0");
+		CDLabel.setBounds(83, 66, 386, 26);
+		frame.getContentPane().add(CDLabel);
+		
+		JLabel DPStxt = new JLabel("DPS:");
+		DPStxt.setBounds(10, 103, 46, 14);
+		frame.getContentPane().add(DPStxt);
+		
+		JLabel DPSLabel = new JLabel("0");
+		DPSLabel.setBounds(83, 103, 386, 26);
+		frame.getContentPane().add(DPSLabel);
 		
 		Timer timer = new Timer(100, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 double count = counting.getCounter();
                 counterLabel.setText(Double.toString(count)); 
+                DPSLabel.setText(Double.toString(counting.getDPS())); 
+                CDLabel.setText(Double.toString(counting.getCD())); 
+                
+                
                 
             } 
         });
 		timer.start(); 
 	}
-
 }/**/
