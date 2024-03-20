@@ -1,22 +1,39 @@
 package Main;
 
 public class ShopItem {
-	private  double cost;
+	
+	
 	private  double DPSvalue;
-	private  double buyBuffs;
-	private  double buyThreshole;
-	private  String type;
 	private  double CDvalue;
 	
-	public ShopItem(double cost, double DPSvalue, double CDvalue, double buyThreshole){
-		this.cost = cost;
+	private  double buyBuffs;
+	private  double buyThreshole;
+	private  double buyCount;
+	
+	private  double cost;
+	private  double costBase;
+	private  double costCurveY;
+	private  double costCurveExponent;
+	
+	private  String type;
+	
+	enemy enemy = new enemy();
+	
+	public ShopItem(double DPSvalue, double CDvalue, double costBase, double costCurveY,double costCurveExponent){
+		
 		this.DPSvalue = DPSvalue;
 		this.CDvalue = CDvalue;
-		this.buyThreshole = buyThreshole;
+		
+		this.costBase = costBase;
+		this.costCurveY = costCurveY;
+		this.costCurveExponent = costCurveExponent;
+		
 	}
 
 	public  double getCost() {
-		return cost;
+		this.cost = this.costBase + Math.pow(enemy.getLevel(), this.costCurveExponent) * this.costCurveY;
+		
+		return this.cost;
 	}
 
 	public  void setCost(double cost) {
@@ -71,11 +88,13 @@ public class ShopItem {
 			double stacks = counting.getCounter() / this.getCost();
 			counting.addDPS(stacks * this.getDPSvalue());
 			counting.removeCounter(counting.getCounter());
+			this.buyCount += 1 * stacks;
 			
 		} else {
 		if (counting.getCounter() >= this.getCost()) {
 			counting.addDPS(this.getDPSvalue());
 			counting.removeCounter(this.getCost());
+			this.buyCount++;
 		}}
 	}}
 	

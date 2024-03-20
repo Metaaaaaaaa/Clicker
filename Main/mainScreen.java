@@ -29,6 +29,9 @@ import javax.swing.SwingConstants;
 public class mainScreen {
 
 	private JFrame frame;
+	int nextStage = 1;
+	int peakStage = 1;
+	double timer = 0;
 	
     Shop shopWindow = new Shop();
     WorldSelection worldSelection = new WorldSelection();
@@ -36,6 +39,7 @@ public class mainScreen {
     Inventory inventory = new Inventory();
     counting counting = new counting();
     enemy enemy = new enemy();
+    
 
 	
     public static void main(String[] args) {
@@ -78,7 +82,7 @@ public class mainScreen {
         Enemie.addMouseListener(new MouseAdapter() {
         	@Override
         	public void mouseClicked(MouseEvent e) {
-        		enemy.setHealt(counting.getCD());
+        		enemy.setHealt(counting.getCD(), "CD");
         		
         	}
         });
@@ -96,6 +100,7 @@ public class mainScreen {
         	@Override
         	public void mouseClicked(MouseEvent e) {
         		enemy.setLevel(-1);
+        		enemy.setMaxHealth();
         		
         	}
         });
@@ -106,7 +111,9 @@ public class mainScreen {
         levelUp.addMouseListener(new MouseAdapter() {
         	@Override
         	public void mouseClicked(MouseEvent e) {
+        		//if peakStage um unedliches skipen zu vermeiden
         		enemy.setLevel(+1);
+        		enemy.setMaxHealth();
         		
         	}
         });
@@ -132,7 +139,8 @@ public class mainScreen {
         worldDown.addMouseListener(new MouseAdapter() {
         	@Override
         	public void mouseClicked(MouseEvent e) {
-    			enemy.setLevel(-10);	
+    			enemy.setLevel(-10);
+    			enemy.setMaxHealth();
         	}
         });
         worldDown.setBounds(64, 24, 49, 23);
@@ -142,7 +150,8 @@ public class mainScreen {
         worldUp.addMouseListener(new MouseAdapter() {
         	@Override
         	public void mouseClicked(MouseEvent e) {
-        			enemy.setLevel(+10);	
+        			enemy.setLevel(+100);
+        			enemy.setMaxHealth();
         	}
         });
         worldUp.addActionListener(new ActionListener() {
@@ -152,23 +161,46 @@ public class mainScreen {
         worldUp.setBounds(353, 24, 49, 23);
         frame.getContentPane().add(worldUp);
         
-        Timer timer = new Timer(17, new ActionListener() {
+        JLabel timerLabel = new JLabel("0");
+        timerLabel.setBounds(205, 58, 46, 14);
+        frame.getContentPane().add(timerLabel);
+        
+        Timer loop = new Timer(17, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
             	int IntHealth = (int) enemy.getHealth();
             	double health = enemy.getHealth();
             	double maxhealth = enemy.getMaxHealth();
-            	if (IntHealth <= 0) {
+            	
+            	if (timer >= 10) {
             		enemy.setMaxHealth();
-            		counting.addCounter(enemy.getGoldDrop());
+            		enemy.setLevel(-1);
+            		timer = 0;
             	}
             	
+            	if (IntHealth <= 0) {
+            		timer = 0;
+            		enemy.setMaxHealth(); // = dient auch um Gegner zurück zusetzen
+            		counting.addCounter(enemy.getGoldDrop());
+            		
+            		if (peakStage <= enemy.getLevel()) {
+            			nextStage++;
+            		}
+            		
+            		if (nextStage == 10) {
+            			enemy.setLevel(1);
+            			nextStage = 0;
+            			peakStage++;
+            			
+            		}
+            	}
+            	timer += 0.030; 
             	
             	int healthbar = (int) (240 *  health / maxhealth);
-            	
 	
-            	enemy.setHealt(counting.getDPS() / 30);
+            	enemy.setHealt(counting.getDPS() / 30, "DPS");
             	
+            	timerLabel.setText(Double.toString(Math.round(timer)));
             	HPLabel.setText(Double.toString(Math.round(health)) + "/" + Double.toString(Math.round(maxhealth))); 
             	StageLabel.setText("Stage: " + Integer.toString(enemy.getLevel()));
             	currentHP.setBounds(117, 405 ,healthbar, 23);
@@ -176,7 +208,7 @@ public class mainScreen {
                
             } 
         });
-        timer.start(); 
+        loop.start(); 
     }
     }
 
