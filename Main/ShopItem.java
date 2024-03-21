@@ -30,7 +30,7 @@ public class ShopItem {
 		this.costCurveY = costCurveY;
 		this.costCurveExponent = costCurveExponent;
 		this.buyCount = 0;
-		this.sumDPSValue = this.DPSvalue;
+		this.sumDPSValue = 0;
 		this.sumCDValue = this.CDvalue;
 		
 		
@@ -81,7 +81,7 @@ public class ShopItem {
 	}
 
 	public  double getsumDPSvalue() {
-		return DPSvalue;
+		return this.sumDPSValue;
 	}
 
 	public  void setsumDPSvalue(double value) {

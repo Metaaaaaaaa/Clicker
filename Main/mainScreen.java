@@ -25,13 +25,14 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
 import javax.swing.SwingConstants;
+import java.awt.Label;
 
 public class mainScreen {
 
 	private JFrame frame;
-	int nextStage = 1;
-	int peakStage = 1;
+	
 	double timer = 0;
+	
 	
     Shop shopWindow = new Shop();
     WorldSelection worldSelection = new WorldSelection();
@@ -39,6 +40,9 @@ public class mainScreen {
     Inventory inventory = new Inventory();
     counting counting = new counting();
     enemy enemy = new enemy();
+    
+    World earth = new World();
+    World venus = new World();
     
 
 	
@@ -54,14 +58,47 @@ public class mainScreen {
             }
         });
     }
+    
+    public int wPC(String prozess){ //worldProgressChanger
+    	int value = 0;
+    	
+    	switch(worldSelection.getCurrentWorld()) {
+			case "Earth":
+				if (prozess == "p"){
+					earth.progression();	
+				}
+
+				if (prozess == "nextStage") {
+					value = earth.getNextStage();
+				}
+				if (prozess == "MaxStage") {
+					value = earth.getMaxStage();
+				}
+				
+			    
+			case "Venus":
+				if (prozess == "p"){
+					venus.progression();	
+				}
+				if (prozess == "nextStage") {
+					value = venus.getNextStage();
+				}
+				if (prozess == "MaxStage") {
+					value = venus.getMaxStage();
+				}
+    }		
+		return value;
+	
+    }
+    
 
    
     public mainScreen() {
         initialize();
     }
-
-   
+    
     private void initialize() {
+    	
     	
     	
         frame = new JFrame();
@@ -130,7 +167,7 @@ public class mainScreen {
         maxHP.setBounds(117, 405, 240, 23);
         frame.getContentPane().add(maxHP);
         
-        JLabel StageLabel = new JLabel("World: 0 Stage: 0");
+        JLabel StageLabel = new JLabel("Stage:0");
         StageLabel.setHorizontalAlignment(SwingConstants.CENTER);
         StageLabel.setBounds(170, 24, 122, 23);
         frame.getContentPane().add(StageLabel);
@@ -162,8 +199,15 @@ public class mainScreen {
         frame.getContentPane().add(worldUp);
         
         JLabel timerLabel = new JLabel("0");
-        timerLabel.setBounds(205, 58, 46, 14);
+        timerLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        timerLabel.setBounds(185, 53, 28, 23);
         frame.getContentPane().add(timerLabel);
+        
+        Label StageCompletionLabel = new Label("0 / 0");
+        StageCompletionLabel.setAlignment(Label.CENTER);
+        StageCompletionLabel.setBounds(230, 53, 62, 22);
+        frame.getContentPane().add(StageCompletionLabel);
+        
         
         Timer loop = new Timer(17, new ActionListener() {
             @Override
@@ -173,7 +217,7 @@ public class mainScreen {
             	double maxhealth = enemy.getMaxHealth();
             	
             	if (timer >= 10) {
-            		enemy.setMaxHealth();
+            		Main.enemy.setMaxHealth();
             		enemy.setLevel(-1);
             		timer = 0;
             	}
@@ -182,33 +226,35 @@ public class mainScreen {
             		timer = 0;
             		enemy.setMaxHealth(); // = dient auch um Gegner zurück zusetzen
             		counting.addCounter(enemy.getGoldDrop());
+            		wPC("p");
             		
-            		if (peakStage <= enemy.getLevel()) {
-            			nextStage++;
-            		}
             		
-            		if (nextStage == 10) {
-            			enemy.setLevel(1);
-            			nextStage = 0;
-            			peakStage++;
-            			
-            		}
+            		
+            		
+            		
             	}
             	timer += 0.030; 
             	
             	int healthbar = (int) (240 *  health / maxhealth);
-	
+            	
+            	
+            	
             	enemy.setHealt(counting.getDPS() / 30, "DPS");
             	
             	timerLabel.setText(Double.toString(Math.round(timer)));
             	HPLabel.setText(Double.toString(Math.round(health)) + "/" + Double.toString(Math.round(maxhealth))); 
             	StageLabel.setText("Stage: " + Integer.toString(enemy.getLevel()));
             	currentHP.setBounds(117, 405 ,healthbar, 23);
+            	StageCompletionLabel.setText(Integer.toString(wPC("nextStage")) + "/" + Integer.toString(wPC("MaxStage")));
                 
                
             } 
         });
         loop.start(); 
+        
+        
     }
+    
     }
+
 

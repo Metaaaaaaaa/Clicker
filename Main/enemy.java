@@ -9,7 +9,6 @@ public class enemy {
 	private static double health;
 	private static double maxHealth;
 	private static double goldDrop;
-	private static double drops;
 	private static int tier;
 	
 	static Random random = new Random();
@@ -36,18 +35,17 @@ public class enemy {
 		}
 	}
 	
+	public static void changeStage (int lv) {
+		level = lv;
+	}
+	
 	public static int getTier() {
 		return tier;
 	}
 	public static void setTier(int tier) {
 		enemy.tier += tier;
 	}
-	public static int getWorld() {
-		return world;
-	}
-	public static void setWorld(int world) {
-		enemy.world += world;
-	}
+	
 	public static double getHealth() {
 		return health;
 	}
@@ -77,12 +75,7 @@ public class enemy {
 		double lv = level;
 		goldDrop = 0.7 * Math.pow(lv, 2.4) + 1; //gold scaling
 	}
-	public static double getDrops() {
-		return drops;
-	}
-	public static void setDrops(double drops) {
-		enemy.drops = drops;
-	}
+	
 
 
 }
