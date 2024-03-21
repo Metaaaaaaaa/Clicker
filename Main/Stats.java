@@ -24,10 +24,6 @@ public class Stats {
 	int sW = screenSize.width + (screenSize.width / 25);
     int sH = screenSize.height;
     int sWU = screenSize.width; 
-    
-    
-    
-   
 	
 	public Stats() {
 		initialize();
@@ -35,7 +31,7 @@ public class Stats {
 
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(sWU / 4 , sH / 2, sW / 4  , sH / 2);
+		frame.setBounds(sWU / 4 , sH / 2 - 10, sW / 4  , sH / 2);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
@@ -67,7 +63,7 @@ public class Stats {
             @Override
             public void actionPerformed(ActionEvent e) {
                 double count = counting.getCounter();
-                counterLabel.setText(Double.toString(count)); 
+                counterLabel.setText(Double.toString(Math.round(count))); 
                 DPSLabel.setText(Double.toString(counting.getDPS())); 
                 CDLabel.setText(Double.toString(counting.getCD())); 
                 

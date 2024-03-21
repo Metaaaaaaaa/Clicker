@@ -64,7 +64,7 @@ public class enemy {
 		
 		double lv = level;
 		
-		maxHealth = 0.5 * Math.pow(lv, 2.5) +9; //health scaling
+		maxHealth = (tier + 0.5) * Math.pow(lv, 2.5) +9; //health scaling
 		health = maxHealth;
 	}
 	public static double getGoldDrop() {
@@ -75,7 +75,7 @@ public class enemy {
 	}
 	public static void setGoldDrop() {
 		double lv = level;
-		goldDrop = 0.7 * Math.pow(lv, 2.5) + 1; //gold scaling
+		goldDrop = 0.7 * Math.pow(lv, 2.4) + 1; //gold scaling
 	}
 	public static double getDrops() {
 		return drops;

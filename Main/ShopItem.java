@@ -14,6 +14,8 @@ public class ShopItem {
 	private  double costBase;
 	private  double costCurveY;
 	private  double costCurveExponent;
+	private  double sumDPSValue;
+	private  double sumCDValue;
 	
 	private  String type;
 	
@@ -27,11 +29,15 @@ public class ShopItem {
 		this.costBase = costBase;
 		this.costCurveY = costCurveY;
 		this.costCurveExponent = costCurveExponent;
+		this.buyCount = 0;
+		this.sumDPSValue = this.DPSvalue;
+		this.sumCDValue = this.CDvalue;
+		
 		
 	}
 
-	public  double getCost() {
-		this.cost = this.costBase + Math.pow(enemy.getLevel(), this.costCurveExponent) * this.costCurveY;
+	public  double getcost() {
+		this.cost = this.costBase + Math.pow(this.getbuyCount(), this.costCurveExponent) * this.costCurveY;
 		
 		return this.cost;
 	}
@@ -74,6 +80,14 @@ public class ShopItem {
 	
 	}
 
+	public  double getsumDPSvalue() {
+		return DPSvalue;
+	}
+
+	public  void setsumDPSvalue(double value) {
+		this.sumDPSValue += value;
+	}
+	
 	public  double getCDvalue() {
 		return CDvalue;
 	}
@@ -82,19 +96,37 @@ public class ShopItem {
 		
 	}
 	
-	public void buyProgress(boolean maxBuy) {
+	public  double getsumCDvalue() {
+		return CDvalue;
+	}
+
+	public  void setsumCDvalue(double value) {
+		this.sumCDValue += value;
+	}
+	
+	public  void setbuyCount(double count) {
+		this.buyCount += count;
 		
+	}
+	
+	public double getbuyCount() {
+		return buyCount;
+	}
+	
+	public void buyProgress(boolean maxBuy) {
+		if  (counting.getCounter() >= this.getcost()) {
 		if (maxBuy) {
-			double stacks = counting.getCounter() / this.getCost();
+			double stacks = counting.getCounter() / this.getcost();
 			counting.addDPS(stacks * this.getDPSvalue());
+			this.setsumDPSvalue(stacks * this.getDPSvalue());
 			counting.removeCounter(counting.getCounter());
-			this.buyCount += 1 * stacks;
+			this.setbuyCount(1 * stacks);
 			
-		} else {
-		if (counting.getCounter() >= this.getCost()) {
+		} else { 
 			counting.addDPS(this.getDPSvalue());
-			counting.removeCounter(this.getCost());
-			this.buyCount++;
+			this.setsumDPSvalue(this.getDPSvalue());
+			counting.removeCounter(this.getcost());
+			this.setbuyCount(1);
 		}}
 	}}
 	
