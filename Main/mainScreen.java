@@ -41,8 +41,8 @@ public class mainScreen {
     counting counting = new counting();
     enemy enemy = new enemy();
     
-    World earth = new World();
-    World venus = new World();
+    World earth = new World(1);
+    World venus = new World(2);
     
 
 	
@@ -61,9 +61,9 @@ public class mainScreen {
     
     public int wPC(String prozess){ //worldProgressChanger
     	int value = 0;
-    	
-    	switch(worldSelection.getCurrentWorld()) {
-			case "Earth":
+    	String world = worldSelection.getCurrentWorld();
+    	if (world == "Earth") {
+			
 				if (prozess == "p"){
 					earth.progression();	
 				}
@@ -74,9 +74,14 @@ public class mainScreen {
 				if (prozess == "MaxStage") {
 					value = earth.getMaxStage();
 				}
+				if (worldSelection.getSwitchWorld()) {
+					enemy.changeStage(earth.getPeakStage(), earth.getDifficulty());
+					worldSelection.setSwitchWorld(false);
+					enemy.setMaxHealth();
+				}
 				
-			    
-			case "Venus":
+    	}
+    	if (world == "Venus" ){
 				if (prozess == "p"){
 					venus.progression();	
 				}
@@ -85,6 +90,12 @@ public class mainScreen {
 				}
 				if (prozess == "MaxStage") {
 					value = venus.getMaxStage();
+				}
+				if (worldSelection.getSwitchWorld()) {
+					
+					enemy.changeStage(venus.getPeakStage(), venus.getDifficulty());
+					worldSelection.setSwitchWorld(false);
+					enemy.setMaxHealth();
 				}
     }		
 		return value;
@@ -227,6 +238,7 @@ public class mainScreen {
             		enemy.setMaxHealth(); // = dient auch um Gegner zurück zusetzen
             		counting.addCounter(enemy.getGoldDrop());
             		wPC("p");
+            		
             		
             		
             		

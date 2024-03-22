@@ -35,8 +35,11 @@ public class WorldSelection {
 		currentWorld = cW;
 	}
 	
-	public boolean switchWorld() {
+	public boolean getSwitchWorld() {
 		return switchWorld;
+	}
+	public void setSwitchWorld(boolean state) {
+		switchWorld = state;
 	}
 	
 
@@ -56,7 +59,9 @@ public class WorldSelection {
 		
 		JButton btnNewButton = new JButton("Earth");
 		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) { currentWorld = "Earth";
+			public void actionPerformed(ActionEvent e) { setCurrentWorld("Earth");
+			setSwitchWorld(true);
+			
 			}
 		});
 		btnNewButton.setBounds(32, 34, 89, 23);
@@ -65,8 +70,8 @@ public class WorldSelection {
 		JButton btnNewButton_1 = new JButton("Venus");
 		btnNewButton_1.addMouseListener(new MouseAdapter() {
 			@Override
-			public void mouseClicked(MouseEvent e) { currentWorld = "Venus";
-				
+			public void mouseClicked(MouseEvent e) { setCurrentWorld("Venus");
+			setSwitchWorld(true);
 			
 				
 			}
@@ -75,4 +80,5 @@ public class WorldSelection {
 		btnNewButton_1.setBounds(32, 83, 89, 23);
 		frame.getContentPane().add(btnNewButton_1);
 	}
+
 }

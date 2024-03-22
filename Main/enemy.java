@@ -10,12 +10,14 @@ public class enemy {
 	private static double maxHealth;
 	private static double goldDrop;
 	private static int tier;
+	private static double difficulty;
 	
 	static Random random = new Random();
 	
 	public enemy() {
 		level = 1;
 		tier = 0;
+		difficulty = 1;
 	}
 	
 	public static int getLevel() {
@@ -35,8 +37,9 @@ public class enemy {
 		}
 	}
 	
-	public static void changeStage (int lv) {
-		level = lv;
+	public static void changeStage (int lv, double diff) {
+		level = lv + 1;
+		difficulty = diff;
 	}
 	
 	public static int getTier() {
@@ -62,7 +65,7 @@ public class enemy {
 		
 		double lv = level;
 		
-		maxHealth = (tier + 0.5) * Math.pow(lv, 2.5) +9; //health scaling
+		maxHealth = (tier + 0.5) * Math.pow(lv, 2.5 * difficulty) +9; //health scaling
 		health = maxHealth;
 	}
 	public static double getGoldDrop() {
@@ -75,6 +78,7 @@ public class enemy {
 		double lv = level;
 		goldDrop = 0.7 * Math.pow(lv, 2.4) + 1; //gold scaling
 	}
+	
 	
 
 
